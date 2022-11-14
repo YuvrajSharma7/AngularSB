@@ -1,0 +1,76 @@
+<div class="col-md-6 offset-md-3">
+    <h3>Create Employee</h3>
+
+    <form (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label>First Name</label>
+            <input type="text" class="form-control" id="firstName" [(ngModel)]="employee.firstName" name="firstName">
+        </div>
+
+        <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" class="form-control" id="lastName" [(ngModel)]="employee.lastName" name="lastName">
+        </div>
+
+        <div class="form-group">
+            <label>Email Id</label>
+            <input pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" #email="ngModel" type="email" class="form-control"
+                id="emailId" [(ngModel)]="employee.emailId" name="email" required email>
+            <span *ngIf="email.invalid && email.touched" style="color:red ;">Email is Invalid</span>
+        </div>
+
+        <div class="form-group">
+            <label>Department</label>
+            <!-- <input type="text" class="form-control" id="department" [(ngModel)]="employee.department" name="department"> -->
+
+            <!--   <input list="department" class="form-select" aria-label="Default select example">
+             <datalist id="department">
+                <option value="IT">
+                <option value="QA">
+                <option value="Testing">
+                <option value="DevOps">
+            </datalist> -->
+            <select class="form-select" (change)="changeDepartment($event)" name="department" id="department"
+                [(ngModel)]="employee.department">
+                <option value="Select Department" [defaultSelected]>Select Department</option>
+                <option [value]="depart.id" *ngFor="let depart of department">{{depart.departName}}</option>
+            </select>
+
+        </div>
+        <div class="form-group">
+            <!--<label>Certificate</label>
+             <input type="text" class="form-control" id="certificate" [(ngModel)]="employee.certificate"
+                name="certificate"> -->
+            <!-- <input list="certificate" class="form-select" aria-label="Default select example">
+            <datalist id="certificate">
+                <option value="JAVA">
+                <option value="PHP">
+                <option value="JavaScript">
+                <option value="Python">
+
+            </datalist> -->
+            <!-- <select class="form-select" name="certificate" id="certificate" [(ngModel)]="employee.certificate">
+                <option value="Select Certificate">Select Certificate</option>
+                <option [value]="certi.id" *ngFor="let certi of certificate">{{certi.certiName}}</option>
+            </select> -->
+            <label>Certificate: </label>
+            <div *ngFor="let certi of certificate">
+                <input type="radio" id="certificate" name="certificate" [value]="certi.id"
+                    [(ngModel)]="employee.certificate"> &nbsp;
+                <label for="certificate">{{certi.certiName}}</label>
+
+            </div>
+        </div>
+
+        <div class="form-group" *ngIf="true">
+            <label>Skills: </label>
+            <div *ngFor="let skill of skills">
+                <input type="checkbox" id="{{skill.skillName}}" name="{{skill.skillName}}" [value]="skill.id"
+                    [(ngModel)]="skill.isselected" (change)="onchange($event)"> &nbsp;
+                <label>{{skill.skillName}}</label>
+            </div>
+        </div>
+
+        <button class="btn btn-success" type="submit">Submit</button>
+    </form>
+</div>
